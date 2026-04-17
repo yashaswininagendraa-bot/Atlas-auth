@@ -593,6 +593,8 @@ body {
 
 /* --- DIGITAL TWIN SIMULATION MODULE --- */
 #digitalTwinPage,
+#viewport,
+.viewport-content,
 .dt-grid-container,
 .dt-grid-container * {
     -ms-overflow-style: none !important;
@@ -600,6 +602,8 @@ body {
 }
 
 #digitalTwinPage::-webkit-scrollbar,
+#viewport::-webkit-scrollbar,
+.viewport-content::-webkit-scrollbar,
 .dt-grid-container::-webkit-scrollbar,
 .dt-grid-container *::-webkit-scrollbar {
     display: none !important;
