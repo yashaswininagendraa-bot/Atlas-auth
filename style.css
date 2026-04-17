@@ -1,3 +1,25 @@
+/* Emergency States */
+body.emergency-halt {
+    filter: saturate(0) contrast(1.2);
+    pointer-events: none !important;
+}
+
+body.emergency-halt::after {
+    content: 'CRITICAL HALT';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 77, 77, 0.9);
+    color: white;
+    padding: 2rem 4rem;
+    font-family: var(--font-header);
+    font-weight: 800;
+    font-size: 3rem;
+    z-index: 9999;
+    border-radius: 8px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
 :root {
     --bg-darker: #0d0d0f;
     --bg-dark: #131315;

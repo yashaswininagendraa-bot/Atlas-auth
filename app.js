@@ -306,18 +306,19 @@ function initEventListeners() {
         const text = btn.textContent.trim().toUpperCase();
 
         if (text === 'REQUEST DIAGNOSTICS') {
-            alert("Diagnostics requested");
+            alert("TELEMETRY SCAN INITIATED: Diagnostics requested for Node-09");
         } else if (text === 'ISOLATE AXIS') {
-            alert("Axis isolated successfully");
+            alert("SAFETY PROTOCOL: Axis isolated successfully. Hardware locked.");
         } else if (text === 'TRIGGER WORK ORDER') {
-            alert("Work order created");
-        } else if (text === 'ACKNOWLEDGE' || text === 'DISMISS' || text === '✖') {
+            alert("LOGISTICS: Work order created and dispatched to Technician-On-Call.");
+        } else if (text === 'ACKNOWLEDGE' || text === 'DISMISS' || text.includes('✖')) {
             const card = btn.closest('.insight-card, .stack-card');
             if (card) {
+                card.style.transform = 'translateY(-10px)';
                 card.style.opacity = '0';
-                card.style.transform = 'translateX(20px)';
-                card.style.transition = 'all 0.4s ease';
-                setTimeout(() => card.remove(), 400);
+                card.style.pointerEvents = 'none';
+                card.style.transition = '0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                setTimeout(() => card.remove(), 300);
             }
         }
     });
@@ -326,9 +327,11 @@ function initEventListeners() {
     const emergencyBtn = document.querySelector('.emergency-btn');
     if (emergencyBtn) {
         emergencyBtn.addEventListener('click', () => {
-            document.body.style.filter = 'saturate(0) contrast(1.2)';
-            document.body.style.pointerEvents = 'none';
-            alert("CRITICAL SYSTEM HALT: EMERGENCY STOP ACTIVATED");
+            const confirmHalt = confirm("WARNING: ARE YOU SURE YOU WANT TO ACTIVATE THE EMERGENCY STOP? This will halt all active industrial nodes.");
+            if (confirmHalt) {
+                document.body.classList.add('emergency-halt');
+                alert("SYSTEM STATUS: CRITICAL HALT. All processes terminated.");
+            }
         });
     }
 }
