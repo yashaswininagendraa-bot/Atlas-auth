@@ -30,15 +30,25 @@ def get_machines():
     return {"machines": simulate_machines(MACHINES)}
 
 # Static Assets Mounting
-# We will move frontend files to the 'public' folder
-if os.path.exists("public"):
-    app.mount("/static", StaticFiles(directory="public"), name="static")
+# We use absolute paths to ensure the server finds the 'public' folder regardless of execution context
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PUBLIC_DIR = os.path.join(BASE_DIR, "public")
+
+if os.path.exists(PUBLIC_DIR):
+    app.mount("/static", StaticFiles(directory=PUBLIC_DIR), name="static")
 
 @app.get("/")
 def read_root():
-    return FileResponse("public/index.html")
+    index_path = os.path.join(PUBLIC_DIR, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return {"error": "Dashboard index not found", "checked_path": index_path}
 
 @app.get("/health")
 def health_check():
-    return {"status": "ATLAS+ Core Server Active", "version": "2.4.0"}
+    return {
+        "status": "ATLAS+ Core Server Active", 
+        "version": "2.4.0",
+        "public_dir": PUBLIC_DIR if os.path.exists(PUBLIC_DIR) else "MISSING"
+    }
 
