@@ -297,5 +297,44 @@ function renderCharts() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// Global Event Listeners for Dynamic Buttons
+function initEventListeners() {
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+
+        const text = btn.textContent.trim().toUpperCase();
+
+        if (text === 'REQUEST DIAGNOSTICS') {
+            alert("Diagnostics requested");
+        } else if (text === 'ISOLATE AXIS') {
+            alert("Axis isolated successfully");
+        } else if (text === 'TRIGGER WORK ORDER') {
+            alert("Work order created");
+        } else if (text === 'ACKNOWLEDGE' || text === 'DISMISS' || text === '✖') {
+            const card = btn.closest('.insight-card, .stack-card');
+            if (card) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateX(20px)';
+                card.style.transition = 'all 0.4s ease';
+                setTimeout(() => card.remove(), 400);
+            }
+        }
+    });
+
+    // Emergency Stop
+    const emergencyBtn = document.querySelector('.emergency-btn');
+    if (emergencyBtn) {
+        emergencyBtn.addEventListener('click', () => {
+            document.body.style.filter = 'saturate(0) contrast(1.2)';
+            document.body.style.pointerEvents = 'none';
+            alert("CRITICAL SYSTEM HALT: EMERGENCY STOP ACTIVATED");
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    initEventListeners();
+});
 window.switchPage = switchPage;
