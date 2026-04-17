@@ -138,19 +138,21 @@ function renderCharts() {
                             label: 'Temp',
                             data: [...history.temp],
                             borderColor: '#0088ff',
-                            borderWidth: 2,
+                            backgroundColor: 'rgba(0, 136, 255, 0.1)',
+                            borderWidth: 3,
                             pointRadius: 0,
                             tension: 0.4,
-                            fill: false
+                            fill: true
                         },
                         {
                             label: 'Vib',
                             data: [...history.vib],
                             borderColor: '#a855f7',
-                            borderWidth: 2,
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            borderWidth: 3,
                             pointRadius: 0,
                             tension: 0.4,
-                            fill: false,
+                            fill: true,
                             yAxisID: 'y1'
                         }
                     ]
@@ -162,8 +164,17 @@ function renderCharts() {
                     plugins: { legend: { display: false } },
                     scales: {
                         x: { display: false },
-                        y: { display: false },
-                        y1: { display: false, position: 'right' }
+                        y: { 
+                            display: false,
+                            min: 20,
+                            max: 110
+                        },
+                        y1: { 
+                            display: false, 
+                            position: 'right',
+                            min: 0,
+                            max: 6
+                        }
                     }
                 }
             });
