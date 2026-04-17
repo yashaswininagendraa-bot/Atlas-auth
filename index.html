@@ -40,10 +40,10 @@
         <div class="main-wrapper">
             <header class="top-bar">
                 <div class="view-links">
-                    <a href="#" id="digitalLink" class="active" onclick="switchPage('digital')">Digital Twin</a>
-                    <a href="#" id="alertsLink" onclick="switchPage('alerts')">Alert Stack</a>
-                    <a href="#" id="analyticsLink" onclick="switchPage('analytics')">Analytics</a>
-                    <a href="#" id="diagnosticsLink" onclick="switchPage('diagnostics')">Diagnostics</a>
+                    <a href="#" id="digitalTab" class="active" onclick="showPage('digitalTwinPage')">Digital Twin</a>
+                    <a href="#" id="alertsTab" onclick="showPage('alertStackPage')">Alert Stack</a>
+                    <a href="#" id="analyticsTab" onclick="showPage('analyticsPage')">Analytics</a>
+                    <a href="#" id="diagnosticsTab" onclick="showPage('diagnosticsPage')">Diagnostics</a>
                 </div>
                 
                 <div class="top-actions">
@@ -59,7 +59,18 @@
             <main class="dashboard-grid">
                 <!-- Content Area -->
                 <section class="viewport-content" id="main-content">
-                    <!-- Injected by JS based on view -->
+                    <div id="digitalTwinPage" class="page">
+                        <!-- Digital Twin Content -->
+                    </div>
+                    <div id="alertStackPage" class="page" style="display: none;">
+                        <!-- Alert Stack Content -->
+                    </div>
+                    <div id="analyticsPage" class="page" style="display: none;">
+                        <!-- Analytics Content -->
+                    </div>
+                    <div id="diagnosticsPage" class="page" style="display: none;">
+                        <!-- Diagnostics Content -->
+                    </div>
                 </section>
 
                 <!-- Insights Sidebar -->
