@@ -245,6 +245,14 @@ main {
 
 .priority-row:last-child { border-bottom: none; }
 
+/* Charts */
+.chart-wrap {
+    height: 100px;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #1a1a1a;
+}
+
 @media (max-width: 1200px) {
     .machine-grid { grid-template-columns: repeat(2, 1fr); }
 }
