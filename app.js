@@ -40,7 +40,7 @@ function loadDashboard() {
         
         document.getElementById('digitalTab').style.display = 'inline-block';
         document.getElementById('analyticsTab').style.display = 'inline-block';
-        document.getElementById('alertsTab').style.display = 'none';
+        document.getElementById('alertsTab').style.display = 'inline-block';
 
         showPage('digitalTwinPage');
     } else {
@@ -80,7 +80,7 @@ function showPage(pageId) {
     const activeTabId = tabs[pageId];
     if (activeTabId) document.getElementById(activeTabId).classList.add('active');
 
-    if (pageId === 'digitalTwinPage' && currentRole === 'engineer') {
+    if (pageId === 'digitalTwinPage') {
         setTimeout(renderDigitalTwinChart, 50);
     }
 }
@@ -100,130 +100,121 @@ function populateAllPages() {
 }
 
 /**
- * ENGINEER VIEW ENHANCEMENTS: Analytical & Multi-component
+ * REVERTED TO 1ST IMAGE LAYOUT
  */
 function renderDigitalTwinContent() {
-    const m = machineData[0] || { machine_id: "N/A", temperature: 85, vibration: 2.3 };
+    const m = machineData[0] || { machine_id: "N/A", temperature: 106.8, vibration: 0.082 };
     const container = document.getElementById('digitalTwinPage');
     container.innerHTML = `
+        <!-- Section: Overview -->
         <div id="overview" class="view-header">
             <div class="view-title">
                 <h2>Digital Twin <span>Engine</span></h2>
-                <div class="view-subtitle">${m.machine_id} Tactical Analysis Profile</div>
+                <div class="view-subtitle"><span>${m.machine_id} Hybrid Reality Sync</span> • <span>Latency 4ms</span></div>
+            </div>
+            <div class="view-metrics">
+                <div class="metric-badge"><div class="m-label">Risk Score</div><div class="m-value">12<span>/100</span></div></div>
+                <div class="metric-badge"><div class="m-label">Anomaly Timer</div><div class="m-value">00:04:12</div></div>
             </div>
         </div>
 
+        <!-- Section: Telemetry -->
         <div id="telemetry" class="telemetry-focus">
-            <div class="focus-header"><h3>Active vibration baseline</h3></div>
+            <div class="focus-header"><h3>VIBRATION BASELINE ANALYSIS</h3></div>
             <div class="big-chart-wrap"><canvas id="big-telemetry-chart"></canvas></div>
-            
-            <!-- Insight Layer below graph -->
-            <div class="analytical-insights">
-                <div class="insight-item warning">
-                    <span class="icon">⚠️</span>
-                    <div class="txt">
-                        <strong>Trend Alert:</strong> Increasing vibration trend detected in sector 4.
-                        <span class="sub">Estimated failure window: 4 hours @ current load.</span>
-                    </div>
+        </div>
+
+        <!-- Section: Risk Matrix (Thermal, Torque, Drift) -->
+        <div id="riskMatrix" class="metric-row" style="margin-bottom: 3rem;">
+            <div class="metric-card">
+                <div class="metric-icon">🌡️</div>
+                <div class="card-data">
+                    <h4>THERMAL BUFFER</h4>
+                    <div class="val live-temp-${m.machine_id}">${m.temperature.toFixed(1)}°C</div>
+                    <div class="sub"><span>NOMINAL</span><span>LIMIT: 95°C</span></div>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚡</div>
+                <div class="card-data">
+                    <h4>LOAD TORQUE</h4>
+                    <div class="val">1,240<span> Nm</span></div>
+                    <div class="sub"><span>STABLE</span><span>PEAK: 1,800 Nm</span></div>
+                </div>
+            </div>
+            <div class="metric-card" style="border-left: 2px solid var(--accent-red)">
+                <div class="metric-icon" style="color: var(--accent-red)">📉</div>
+                <div class="card-data">
+                    <h4 style="color: var(--accent-red)">DRIFT FACTOR</h4>
+                    <div class="val">0.082<span>σ</span></div>
+                    <div class="sub"><span style="color:var(--accent-red); font-weight:800">ELEVATED VIBRATION DETECTED</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- Summary Cards below graph -->
-        <div id="riskMatrix" class="metric-row">
-            <div class="metric-card summary">
-                <div class="card-data">
-                    <h4>Risk Score</h4>
-                    <div class="val" style="color: var(--accent-red)">84<span>/100</span></div>
-                    <div class="sub">HIGH SEVERITY</div>
-                </div>
-            </div>
-            <div class="metric-card summary">
-                <div class="card-data">
-                    <h4>System Status</h4>
-                    <div class="val">WARNING</div>
-                    <div class="sub">DEGRADED PERFORMANCE</div>
-                </div>
-            </div>
-            <div class="metric-card summary">
-                <div class="card-data">
-                    <h4>Active Alerts</h4>
-                    <div class="val">02</div>
-                    <div class="sub">UNACKNOWLEDGED</div>
-                </div>
+        <!-- Section: AI Insights (Forecast) -->
+        <div id="aiInsights" class="focus-header" style="margin-bottom: 2rem;">
+            <h3>AI SENTINEL FORECAST</h3>
+            <p style="color:var(--text-muted); font-size:0.75rem; margin-top:0.5rem; text-align: right; width: 100%;">"Spectral analysis indicates 94% probability of bearing fatigue in sector 7 within 22 operating hours."</p>
+        </div>
+
+        <!-- Section: System Log -->
+        <div id="systemLog" class="telemetry-focus" style="padding: 2rem;">
+            <div class="focus-header"><h3>DIAGNOSTIC EVENT LOG</h3></div>
+            <div style="font-family: monospace; font-size: 0.75rem; color: var(--text-muted); line-height: 2;">
+                [15:42:01] SECURE UPDATER: Node-09 heartbeat sync established.<br>
+                [15:42:04] VIBRATION_DAEMON: Micro-spike detected in AXIS-Y (+0.4mm/s).<br>
+                [15:42:15] THERMAL_SHIELD: Buffer recalibration successful.
             </div>
         </div>
     `;
 }
 
-/**
- * TECHNICIAN VIEW ENHANCEMENTS: Action-focused, Big text, No graphs
- */
 function renderAlertStackContent() {
     const container = document.getElementById('alertStackPage');
     container.innerHTML = `
         <div id="overview" class="view-header">
             <div class="view-title">
-                <h2>Maintenance <span>Actions</span></h2>
-                <div class="view-subtitle">High-priority critical system instructions.</div>
+                <h2>Smart <span>Prioritization</span></h2>
+                <div class="view-subtitle"><span>Tactical overlay ranking critical system failures.</span></div>
             </div>
         </div>
-
-        <div class="technician-portal">
-            <!-- STATUS DISPLAY -->
-            <div class="status-grid">
-                <div class="status-block critical">
-                    <div class="s-label">MACHINE STATUS</div>
-                    <div class="s-val">CRITICAL</div>
+        <div id="telemetry" class="threat-stack">
+            <div class="stack-card critical">
+                <div class="stack-info">
+                    <div class="m-label" style="color: var(--accent-red)">CRITICAL ALERT • #telemetryAnchor</div>
+                    <h3>Thermal Runaway Protection</h3>
+                    <p>Immediate mitigation required.</p>
                 </div>
-                <div class="status-block info">
-                    <div class="s-label">CURRENT TEMP</div>
-                    <div class="s-val live-temp-CNC_01">--°C</div>
-                </div>
-            </div>
-
-            <!-- ACTION MESSAGES -->
-            <div class="action-stack">
-                <div class="action-card critical">
-                    <div class="action-header">IMMEDIATE ACTION REQUIRED</div>
-                    <div class="action-body">
-                        <h3>Inspect Bearing #4 Assembly</h3>
-                        <p>Extreme vibration detected in primary spindle. Shutdown likely if not addressed.</p>
-                    </div>
-                    <div class="action-footer">
-                        <button class="call-to-action primary">COMPLETE INSPECTION</button>
-                    </div>
-                </div>
-
-                <div class="action-card warning">
-                    <div class="action-header">MAINTENANCE CHECK</div>
-                    <div class="action-body">
-                        <h3>Check Motor Temperature</h3>
-                        <p>Thermal profile is 12% above nominal limits. Verification needed.</p>
-                    </div>
-                    <div class="action-footer">
-                        <button class="call-to-action secondary">ACKNOWLEDGE</button>
-                    </div>
-                </div>
+                <div class="stack-actions"><button class="call-to-action primary">TRIGGER WORK ORDER</button></div>
             </div>
         </div>
+        <div id="riskMatrix" style="height:200px"></div>
+        <div id="aiInsights" style="height:200px"></div>
+        <div id="systemLog" style="height:200px"></div>
     `;
 }
 
 function renderAnalyticsContent() {
     const container = document.getElementById('analyticsPage');
-    container.innerHTML = `<div id="overview" class="view-header"><h2>Operational <span>Analytics</span></h2></div>`;
+    container.innerHTML = `<div id="overview" class="view-header"><h2>Operational <span>Analytics</span></h2></div><div id="telemetry" style="height:400px"></div>`;
 }
 
 function renderDiagnosticsContent() {
     const container = document.getElementById('diagnosticsPage');
-    container.innerHTML = `<div id="overview" class="view-header"><h2>System <span>Diagnostics</span></h2></div>`;
+    container.innerHTML = `<div id="overview" class="view-header"><h2>System <span>Diagnostics</span></h2></div><div id="telemetry" style="height:400px"></div>`;
 }
 
 function renderInsights() {
     const feed = document.getElementById('insight-feed');
     if (!feed) return;
-    feed.innerHTML = `<div class="insight-card predictive"><h4>CNC_01: Vibration +12%</h4><button class="action-btn">REQUEST DIAGNOSTICS</button></div>`;
+    feed.innerHTML = `
+        <div class="insight-card predictive">
+            <div class="card-meta"><span class="tag-predictive">PREDICTIVE</span><span>2m ago</span></div>
+            <h4>CNC_01: Vibration +12%</h4>
+            <button class="action-btn">REQUEST DIAGNOSTICS</button>
+        </div>
+    `;
 }
 
 function updateCharts() {
@@ -244,8 +235,11 @@ function renderDigitalTwinChart() {
         const ctx = canvas.getContext('2d');
         chartInstances['big'] = new Chart(ctx, {
             type: 'line',
-            data: { labels: Array(30).fill(''), datasets: [{ label: 'VIB', data: [...h.vib], borderColor: '#00f2ff', borderWidth: 2, pointRadius: 0, tension: 0.6, fill: false }] },
-            options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false, min: 2, max: 9 } } }
+            data: {
+                labels: Array(30).fill(''),
+                datasets: [{ label: 'VIB', data: [...h.vib], borderColor: '#00f2ff', borderWidth: 2, pointRadius: 0, tension: 0.6, fill: false }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false, min: 0, max: 9 } } }
         });
     }
 }
@@ -272,13 +266,16 @@ function updateLiveValues() {
 function initEventListeners() {
     document.getElementById('overviewBtn').addEventListener('click', () => handleSidebarScroll('overview', 'overviewBtn'));
     document.getElementById('telemetryBtn').addEventListener('click', () => handleSidebarScroll('telemetry', 'telemetryBtn'));
-    
+    document.getElementById('riskMatrixBtn').addEventListener('click', () => handleSidebarScroll('riskMatrix', 'riskMatrixBtn'));
+    document.getElementById('aiInsightsBtn').addEventListener('click', () => handleSidebarScroll('aiInsights', 'aiInsightsBtn'));
+    document.getElementById('systemLogBtn').addEventListener('click', () => handleSidebarScroll('systemLog', 'systemLogBtn'));
+
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('button');
         if (!btn) return;
         const text = btn.textContent.trim().toUpperCase();
         if (text === 'REQUEST DIAGNOSTICS') alert("Diagnostics requested");
-        else if (text === 'COMPLETE INSPECTION') alert("Task completed: Spindle bearing verified.");
+        else if (text === 'TRIGGER WORK ORDER') alert("Work order created");
     });
 
     const emergencyBtn = document.querySelector('.emergency-btn');
@@ -298,3 +295,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 window.showPage = showPage;
 window.switchRole = switchRole;
+window.handleSidebarScroll = handleSidebarScroll;
