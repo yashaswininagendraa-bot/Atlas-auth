@@ -596,21 +596,24 @@ body {
     padding: 2rem;
     height: calc(100vh - 8rem);
     overflow-y: auto;
+    overflow-x: hidden;
     /* REQ: Hide scrollbar */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
 }
 
 .dt-grid-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
 .dt-simulation-grid {
-    display: grid;
+    display: grid !important;
     /* REQ: 2x2 Grid */
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 1.5rem;
-    padding-bottom: 2rem;
+    padding-bottom: 5rem;
 }
 
 .dt-card {
